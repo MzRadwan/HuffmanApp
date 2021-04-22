@@ -16,4 +16,5 @@
     <string name="count_of_unique_chars">Liczba różnych znaków</string>
     <string name="entropy_value">Wartośc entropii</string>
     <string name="avg_lenth_of_word">Średnia długość słowa kodowanego</string>
+
 </resources>
