@@ -45,8 +45,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="16dp"
-            android:onClick="onClickDarkMode"
             android:background="@drawable/ic_light_mode_white_24dp"
+            android:onClick="onClickDarkMode"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/aboutButton"
             app:layout_constraintTop_toTopOf="parent" />
@@ -74,61 +74,57 @@
 
                 >
 
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
 
-                <RadioButton
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/text1Button"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-
                     android:background="@color/secondary"
+                    android:button="@null"
                     android:elevation="4dp"
                     android:fontFamily="@font/scp_reg"
-                    android:text="@string/text1"
-                    android:button="@null"
                     android:gravity="center"
-                    android:textColor="@color/white"
+                    android:onClick="onClickSetText1"
+                    android:text="@string/text1"
                     android:textAllCaps="true"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
-                <RadioButton
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/text2Button"
                     android:layout_width="wrap_content"
-                    android:button="@null"
                     android:layout_height="36dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    android:background="@color/secondaryLight"
+                    android:background="@color/secondary"
+                    android:button="@null"
                     android:elevation="4dp"
-                    android:gravity="center"
                     android:fontFamily="@font/scp_reg"
-                    android:textAllCaps="true"
+                    android:gravity="center"
+                    android:onClick="onClickSetText2"
                     android:text="@string/text2"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
-                <RadioButton
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/myTextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_weight="1"
                     android:background="@color/secondary"
                     android:button="@null"
-                    android:gravity="center"
-                    android:textAllCaps="true"
                     android:elevation="4dp"
                     android:fontFamily="@font/scp_reg"
+                    android:gravity="center"
+                    android:onClick="onClickMyText"
                     android:text="@string/my_text"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
-                </RadioGroup>
             </LinearLayout>
 
             <EditText
@@ -138,8 +134,9 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/white60background"
                 android:elevation="2dp"
+                android:enabled="false"
                 android:gravity="start|top"
-                android:hint="@string/text2_hint"
+                android:hint="@string/input_info"
                 android:inputType="textMultiLine"
                 android:padding="16dp"
                 android:textColor="@color/greyDark"
@@ -153,9 +150,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:background="@color/secondary"
+                android:enabled="false"
                 android:fontFamily="@font/scp_reg"
                 android:text="@string/calculate"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tableTopBar"
@@ -166,22 +165,92 @@
                 android:elevation="4dp"
                 android:fontFamily="@font/scp_reg"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"
                 android:paddingTop="8dp"
+                android:paddingEnd="16dp"
                 android:text="@string/table_of_occurences"
                 android:textAlignment="gravity"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/tableText"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/white60background"
                 android:elevation="2dp"
-                android:padding="16dp"
-                android:textColor="@color/greyDark"
-                android:textSize="14sp" />
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/characterLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/character"
+                    android:textColor="@color/secondaryDark"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/characterTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="A\n\nB\n\nC"
+                    android:textColor="@color/greyDark"
+                    android:textSize="14sp"
+
+                    app:layout_constraintEnd_toEndOf="@+id/characterLabel"
+                    app:layout_constraintStart_toStartOf="@+id/characterLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/characterLabel" />
+
+                <TextView
+                    android:id="@+id/countLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/count_label"
+                    android:textColor="@color/secondaryDark"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/huffCodeLabel"
+                    app:layout_constraintStart_toEndOf="@+id/characterLabel"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/countTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="1\n\n3\n\n1"
+                    android:textColor="@color/greyDark"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/countLabel"
+                    app:layout_constraintStart_toStartOf="@+id/countLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/countLabel" />
+
+                <TextView
+                    android:id="@+id/huffCodeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/huffman_code"
+                    android:textColor="@color/secondaryDark"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/huffCodeTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="100\n\n100\n\n101"
+                    android:textColor="@color/greyDark"
+                    android:textSize="14sp"
+
+                    app:layout_constraintEnd_toEndOf="@+id/huffCodeLabel"
+                    app:layout_constraintStart_toStartOf="@+id/huffCodeLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/huffCodeLabel" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textAfterTopBar"
@@ -197,6 +266,7 @@
                 android:textAlignment="gravity"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
+
 
             <TextView
                 android:id="@+id/textAfterText"
@@ -223,15 +293,99 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/statsText"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/white60background"
-                android:elevation="2dp"
-                android:padding="16dp"
-                android:textColor="@color/greyDark"
-                android:textSize="14sp" />
+                android:padding="16dp">
+
+
+                <TextView
+                    android:id="@+id/allCharsCountLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count_of_all_chars"
+                    android:textColor="@color/greyDark"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/allCharsCountValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23"
+                    android:textColor="@color/secondaryDark"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/diffCharsCountLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/count_of_unique_chars"
+                    android:textColor="@color/greyDark"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/allCharsCountLabel" />
+
+                <TextView
+                    android:id="@+id/diffCharsCountValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="13"
+                    android:textColor="@color/secondaryDark"
+                    android:textSize="14sp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/allCharsCountValue" />
+                <TextView
+                    android:id="@+id/avgLengthLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+
+                    android:text="@string/avg_lenth_of_word"
+                    android:textColor="@color/greyDark"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/diffCharsCountLabel" />
+                <TextView
+                    android:id="@+id/avgLengthValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3.3"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/secondaryDark"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/diffCharsCountValue" />
+                <TextView
+                    android:id="@+id/enthropyValLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/entropy_value"
+                    android:textColor="@color/greyDark"
+
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+
+                    app:layout_constraintTop_toBottomOf="@id/avgLengthLabel" />
+                <TextView
+                    android:id="@+id/enthropyValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2.3"
+                    android:textColor="@color/secondaryDark"
+                    android:textSize="14sp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/avgLengthValue" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
                 android:id="@+id/huffTreeTopBar"

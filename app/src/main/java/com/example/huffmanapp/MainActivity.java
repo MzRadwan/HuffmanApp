@@ -1,10 +1,12 @@
 package com.example.huffmanapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isDarkMode = true, isInfo = false;
     private LinearLayout mBackgroundLayout;
     private Button mDarkModeButton, mInfoButton;
+    private AppCompatButton mText1Button, mText2Button, mMyTextButton, mGenerateButton;
+    private EditText mInputText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +33,11 @@ public class MainActivity extends AppCompatActivity {
         mBackgroundLayout = findViewById(R.id.backgroundLayout);
         mDarkModeButton = findViewById(R.id.darkModeButton);
         mInfoButton = findViewById(R.id.aboutButton);
-
-
+        mText1Button = findViewById(R.id.text1Button);
+        mText2Button = findViewById(R.id.text2Button);
+        mMyTextButton = findViewById(R.id.myTextButton);
+        mInputText = findViewById(R.id.inputText);
+        mGenerateButton = findViewById(R.id.generateButton);
 
     }
 
@@ -143,5 +150,31 @@ public class MainActivity extends AppCompatActivity {
         node1.setCharacter("G");
         huff.add(node5);
         return huff;
+    }
+
+    public void onClickSetText1(View view){
+        mText1Button.setBackgroundResource(R.color.secondaryLight);
+        mText2Button.setBackgroundResource(R.color.secondary);
+        mMyTextButton.setBackgroundResource(R.color.secondary);
+        mInputText.setText(R.string.text1);
+        mGenerateButton.setEnabled(true);
+        mInputText.setEnabled(false);
+    }
+    public void onClickSetText2(View view){
+        mText1Button.setBackgroundResource(R.color.secondary);
+        mText2Button.setBackgroundResource(R.color.secondaryLight);
+        mMyTextButton.setBackgroundResource(R.color.secondary);
+        mInputText.setText(R.string.text2);
+        mGenerateButton.setEnabled(true);
+        mInputText.setEnabled(false);
+    }
+
+    public void onClickMyText(View view){
+        mText1Button.setBackgroundResource(R.color.secondary);
+        mText2Button.setBackgroundResource(R.color.secondary);
+        mMyTextButton.setBackgroundResource(R.color.secondaryLight);
+        mInputText.setText("");
+        mGenerateButton.setEnabled(true);
+        mInputText.setEnabled(true);
     }
 }
