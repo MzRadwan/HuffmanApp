@@ -23,13 +23,15 @@ public class MainActivity extends AppCompatActivity {
     private Button mDarkModeButton, mInfoButton;
     private AppCompatButton mText1Button, mText2Button, mMyTextButton, mGenerateButton;
     private EditText mInputText;
+    private List<Node> huff;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        List<Node> huff = createExampleList();
-        createHuffmanTree(huff);
+       // List<Node> huff = createExampleList();
+       // createHuffmanTree(huff);
         mBackgroundLayout = findViewById(R.id.backgroundLayout);
         mDarkModeButton = findViewById(R.id.darkModeButton);
         mInfoButton = findViewById(R.id.aboutButton);
@@ -112,20 +114,84 @@ public class MainActivity extends AppCompatActivity {
             if (!isNewInserted)
                 huffList.add(newTree);
 
-            for (int i = 0; i < huffList.size(); i++) {
+           /* for (int i = 0; i < huffList.size(); i++) {
                 Node currentNode = huffList.get(i);
-                //System.out.println("huf list after new:" + currentNode.getCounter());
+                System.out.println("huf list after new:" + currentNode.getCounter());
                 if (currentNode.getLeftSon() != null){
                     Node leftSon = currentNode.getLeftSon();
-                    //System.out.println("\t I have left son:"+ leftSon.getCounter());
+                    System.out.println("\t I have left son:"+ leftSon.getCounter());
                 }
                 if (currentNode.getRightSon() != null){
                     Node rightSon = currentNode.getRightSon();
-                    //System.out.println("\t I have right son:"+ rightSon.getCounter());
+                    System.out.println("\t I have right son:"+ rightSon.getCounter());
+                }
+            }*/
+
+        }
+        /*for (int i = 0; i < huffList.size(); i++) {
+            Node currentNode = huffList.get(i);
+            System.out.println("Final huff list" + currentNode.getCounter());
+            if (currentNode.getLeftSon() != null){
+                Node leftSon = currentNode.getLeftSon();
+                System.out.println("\t I have left son:"+ leftSon.getCounter());
+            }
+            if (currentNode.getRightSon() != null){
+                Node rightSon = currentNode.getRightSon();
+                System.out.println("\t I have right son:"+ rightSon.getCounter());
+            }
+        }*?
+
+         */
+        printHuffTree(huffList.get(0));
+    }
+
+    public static void printHuffTree(Node node){
+        System.out.println("Node:"+node.getCharacter() + " c: "+ node.getCounter());
+
+        if (node.getLeftSon() != null){
+            Node leftSon = node.getLeftSon();
+
+            System.out.println(" I have left son:"+leftSon.getCharacter() + " c: "+ leftSon.getCounter());
+            printHuffTree(leftSon);
+        }
+        if (node.getRightSon() != null){
+            Node rightSon = node.getRightSon();
+
+
+            System.out.println("I have right son:"+rightSon.getCharacter() + " c: "+ rightSon.getCounter());
+            printHuffTree(rightSon);
+        }
+
+    }
+    public void onClickGenerate(View view){
+        String inputText = mInputText.getText().toString();
+        if (inputText.length()>0){
+            huff = new ArrayList<>();
+            for(int i =  0; i< inputText.length(); i++){
+                boolean charOccured = false;
+                for(Node n: huff){
+                    charOccured = n.getCharacter().equals(inputText.substring(i,i+1));
+                    if(charOccured){
+                        n.setCounter(n.getCounter()+1);
+                        break;
+                    }
+                }
+                if(!charOccured){
+                    Node newNode = new Node(1);
+                    newNode.setCharacter(inputText.substring(i,i+1));
+                    huff.add(newNode);
                 }
             }
 
+            for(Node n: huff){
+                System.out.println("Lista: " + n.getCharacter() + "count: "+ n.getCounter());
+            }
+            createHuffmanTree(huff);
         }
+        else {
+            mInputText.setText(R.string.empty_string_error);
+        }
+        System.out.println(inputText);
     }
 
     public static List<Node> createExampleList(){
@@ -156,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         mText1Button.setBackgroundResource(R.color.secondaryLight);
         mText2Button.setBackgroundResource(R.color.secondary);
         mMyTextButton.setBackgroundResource(R.color.secondary);
-        mInputText.setText(R.string.text1);
+        mInputText.setText(R.string.text1_hint);
         mGenerateButton.setEnabled(true);
         mInputText.setEnabled(false);
     }
@@ -164,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         mText1Button.setBackgroundResource(R.color.secondary);
         mText2Button.setBackgroundResource(R.color.secondaryLight);
         mMyTextButton.setBackgroundResource(R.color.secondary);
-        mInputText.setText(R.string.text2);
+        mInputText.setText(R.string.text2_hint);
         mGenerateButton.setEnabled(true);
         mInputText.setEnabled(false);
     }
@@ -173,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
         mText1Button.setBackgroundResource(R.color.secondary);
         mText2Button.setBackgroundResource(R.color.secondary);
         mMyTextButton.setBackgroundResource(R.color.secondaryLight);
+        mInputText.setHint("");
         mInputText.setText("");
         mGenerateButton.setEnabled(true);
         mInputText.setEnabled(true);

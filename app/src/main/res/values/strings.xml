@@ -18,5 +18,6 @@
     <string name="entropy_value">Wartośc entropii</string>
     <string name="avg_lenth_of_word">Średnia długość słowa kodowanego</string>
     <string name="input_info">Wybierz jedną z opcji powyżej</string>
+    <string name="empty_string_error">Podany tekst nie może być pusty.</string>
 
 </resources>
