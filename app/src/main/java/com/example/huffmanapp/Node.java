@@ -1,6 +1,8 @@
 package com.example.huffmanapp;
 
-public class Node {
+import de.blox.treeview.TreeNode;
+
+public class Node extends TreeNode {
     private String character;
     private int counter;
     private Node leftSon;

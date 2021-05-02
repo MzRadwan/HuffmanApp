@@ -1,5 +1,6 @@
 package com.example.huffmanapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -12,9 +13,12 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.blox.treeview.BaseTreeAdapter;
+import de.blox.treeview.TreeNode;
+import de.blox.treeview.TreeView;
+
 import static com.example.huffmanapp.R.color.greyDark;
 import static com.example.huffmanapp.R.color.greyDark10;
-import static com.example.huffmanapp.R.color.greyLight;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatButton mText1Button, mText2Button, mMyTextButton, mGenerateButton;
     private EditText mInputText;
     private List<Node> huff;
+    private TreeView treeView;
+    private BaseTreeAdapter<ViewHolder> adapter;
 
 
     @Override
@@ -40,6 +46,23 @@ public class MainActivity extends AppCompatActivity {
         mMyTextButton = findViewById(R.id.myTextButton);
         mInputText = findViewById(R.id.inputText);
         mGenerateButton = findViewById(R.id.generateButton);
+
+        treeView = findViewById(R.id.huffTreeView);
+        adapter = new BaseTreeAdapter<ViewHolder>(this, R.layout.node){
+
+            @Override
+            @NonNull
+            public ViewHolder onCreateViewHolder(View view){
+                return new ViewHolder(view);
+            }
+
+            @Override
+            public void onBindViewHolder(ViewHolder viewHolder, Object data, int position) {
+                viewHolder.textView.setText(data.toString());
+            }
+        };
+
+        treeView.setAdapter(adapter);
 
     }
 
@@ -67,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void createHuffmanTree(List<Node> huffList){
+    public  void createHuffmanTree(List<Node> huffList){
         int round = 1;
         while(huffList.size() > 1){
             //System.out.println("\n\nRound:" + round);
@@ -143,9 +166,13 @@ public class MainActivity extends AppCompatActivity {
 
          */
         printHuffTree(huffList.get(0));
+        TreeNode father = new TreeNode(huffList.get(0).getCharacter() != null ? huffList.get(0).getCharacter() +"\n1" : huffList.get(0).getCounter());
+        adapter.setRootNode(father);
     }
 
-    public static void printHuffTree(Node node){
+    public  void printHuffTree(Node node){
+
+
         System.out.println("Node:"+node.getCharacter() + " c: "+ node.getCounter());
 
         if (node.getLeftSon() != null){

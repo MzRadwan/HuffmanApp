@@ -403,8 +403,8 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/huffTreeText"
+            <de.blox.treeview.TreeView
+                android:id="@+id/huffTreeView"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@drawable/white60background"
