@@ -9,7 +9,7 @@
 
         android:layout_height="20dp"
         android:id="@+id/textView"
-        android:background="@color/primary"
+        android:background="@color/secondary"
         android:gravity="center"
         android:textColor="@color/white"
         android:fontFamily="@font/scp_reg"

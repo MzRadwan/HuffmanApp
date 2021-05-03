@@ -167,7 +167,33 @@ public class MainActivity extends AppCompatActivity {
          */
         printHuffTree(huffList.get(0));
         TreeNode father = new TreeNode(huffList.get(0).getCharacter() != null ? huffList.get(0).getCharacter() +"\n1" : huffList.get(0).getCounter());
+        calcHuffman(huff.get(0), "", father);
+
+
         adapter.setRootNode(father);
+    }
+
+    private void calcHuffman(Node node, final String code, TreeNode fatherNode){
+        TreeNode left, right;
+        if(node.getLeftSon()!=null)
+        {
+
+            String nodeText = node.getLeftSon().getCharacter()!= null ? node.getLeftSon().getCounter()+"\n\""+node.getLeftSon().getCharacter()+"\"\n" + code.concat(Integer.toString(0)) : Integer.toString(node.getLeftSon().getCounter());
+            left= new TreeNode(nodeText);
+            calcHuffman(node.getLeftSon(),code+0, left);
+            fatherNode.addChild(left);
+        }
+        if(node.getRightSon()!=null)
+        {   String nodeText = node.getRightSon().getCharacter() != null ? node.getRightSon().getCounter()+"\n\"" + node.getRightSon().getCharacter() +"\"\n"+code.concat(Integer.toString(1)) : Integer.toString(node.getRightSon().getCounter());
+            right = new TreeNode(nodeText);
+            calcHuffman(node.getRightSon(), code+1, right);
+            fatherNode.addChild(right);
+        }
+      /*  else if(node.getLeftSon()==null) {
+            node.setHuffmanCode(code.length()>0? code : "1");
+            codedLetters.put(node.getLetter(),code.length()>0 ? code : "1");
+            nodeArrayList.add(node);
+        }*/
     }
 
     public  void printHuffTree(Node node){
