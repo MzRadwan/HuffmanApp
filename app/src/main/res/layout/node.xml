@@ -5,13 +5,14 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:layout_width="20dp"
+        android:layout_width="wrap_content"
 
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:id="@+id/textView"
         android:background="@color/secondary"
         android:gravity="center"
         android:textColor="@color/white"
+        android:padding="4dp"
         android:fontFamily="@font/scp_reg"
         />
 </LinearLayout>

@@ -223,7 +223,7 @@
                     android:id="@+id/countTable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="1\n\n3\n\n1"
                     android:textColor="@color/greyDark"
                     android:textSize="14sp"
@@ -409,7 +409,7 @@
             <de.blox.treeview.TreeView
                 android:id="@+id/huffTreeView"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="500dp"
                 android:background="@drawable/white60background"
                 android:elevation="2dp"
                 android:layout_marginBottom="32dp"

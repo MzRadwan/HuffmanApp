@@ -7,12 +7,22 @@ public class Node extends TreeNode {
     private int counter;
     private Node leftSon;
     private Node rightSon;
+    private String huffmanCode;
 
     public Node(int counter){
         this.counter = counter;
         this.character = null;
         this.leftSon = null;
         this.rightSon = null;
+        this.huffmanCode = null;
+    }
+
+    public String getHuffmanCode() {
+        return huffmanCode;
+    }
+
+    public void setHuffmanCode(String huffmanCode) {
+        this.huffmanCode = huffmanCode;
     }
 
     public int getCounter() {

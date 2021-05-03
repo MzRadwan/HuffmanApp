@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.blox.treeview.BaseTreeAdapter;
 import de.blox.treeview.TreeNode;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mInputText;
     private List<Node> huff;
     private TreeView treeView;
+    private ArrayList<Node> nodeArrayList;
+    private Map<String, String> codedLetters;
     private BaseTreeAdapter<ViewHolder> adapter;
 
 
@@ -96,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
             //System.out.println("\n\nRound:" + round);
             round++;
             int index1 = 0, index2 = 1;
+            for(int i = 0; i < huffList.size(); i++){
+
+            }
             Node smallest1 = huffList.get(index1);
             //System.out.println("Smallest1 counter:" + smallest1.getCounter());
             Node smallest2 = huffList.get(index2);
@@ -166,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
 
          */
         printHuffTree(huffList.get(0));
+        nodeArrayList = new ArrayList<>();
+        codedLetters = new HashMap<>();
         TreeNode father = new TreeNode(huffList.get(0).getCharacter() != null ? huffList.get(0).getCharacter() +"\n1" : huffList.get(0).getCounter());
         calcHuffman(huff.get(0), "", father);
 
@@ -178,22 +187,24 @@ public class MainActivity extends AppCompatActivity {
         if(node.getLeftSon()!=null)
         {
 
-            String nodeText = node.getLeftSon().getCharacter()!= null ? node.getLeftSon().getCounter()+"\n\""+node.getLeftSon().getCharacter()+"\"\n" + code.concat(Integer.toString(0)) : Integer.toString(node.getLeftSon().getCounter());
+            //System.out.println("leftson::::" + node.getLeftSon().getCounter()+"\n"+node.getLeftSon().getCharacter()+"\n" + code.concat(Integer.toString(0)));
+            String nodeText = node.getLeftSon().getCharacter()!= null ? node.getLeftSon().getCounter()+"\n"+node.getLeftSon().getCharacter()+"\n" + code.concat(Integer.toString(0)) : Integer.toString(node.getLeftSon().getCounter());
+          // System.out.println("node text"+ nodeText);
             left= new TreeNode(nodeText);
             calcHuffman(node.getLeftSon(),code+0, left);
             fatherNode.addChild(left);
         }
         if(node.getRightSon()!=null)
-        {   String nodeText = node.getRightSon().getCharacter() != null ? node.getRightSon().getCounter()+"\n\"" + node.getRightSon().getCharacter() +"\"\n"+code.concat(Integer.toString(1)) : Integer.toString(node.getRightSon().getCounter());
+        {   String nodeText = node.getRightSon().getCharacter() != null ? node.getRightSon().getCounter()+"\n" + node.getRightSon().getCharacter() +"\n"+code.concat(Integer.toString(1)) : Integer.toString(node.getRightSon().getCounter());
             right = new TreeNode(nodeText);
             calcHuffman(node.getRightSon(), code+1, right);
             fatherNode.addChild(right);
         }
-      /*  else if(node.getLeftSon()==null) {
+      else if(node.getLeftSon()==null) {
             node.setHuffmanCode(code.length()>0? code : "1");
-            codedLetters.put(node.getLetter(),code.length()>0 ? code : "1");
+            codedLetters.put(node.getCharacter(),code.length()>0 ? code : "1");
             nodeArrayList.add(node);
-        }*/
+        }
     }
 
     public  void printHuffTree(Node node){
