@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,11 +35,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText mInputText;
     private List<Node> huff;
     private TreeView treeView;
+    private int countOfAllCharacters;
+    private int countOfDistinctCharacters;
     private ArrayList<Node> nodeArrayList;
     private Map<String, String> codedLetters;
     private BaseTreeAdapter<ViewHolder> adapter;
+    private TextView mDiffChars, mAllChars;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         mMyTextButton = findViewById(R.id.myTextButton);
         mInputText = findViewById(R.id.inputText);
         mGenerateButton = findViewById(R.id.generateButton);
+        mDiffChars = findViewById(R.id.diffCharsCountValue);
+        mAllChars = findViewById(R.id.allCharsCountValue);
 
         treeView = findViewById(R.id.huffTreeView);
         adapter = new BaseTreeAdapter<ViewHolder>(this, R.layout.node){
@@ -67,6 +77,20 @@ public class MainActivity extends AppCompatActivity {
         };
 
         treeView.setAdapter(adapter);
+        treeView.setOnTouchListener((v, event) -> {
+            @SuppressLint("ClickableViewAccessibility") int action = event.getAction();
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    break;
+
+                case MotionEvent.ACTION_UP:
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
+            }
+            v.onTouchEvent(event);
+            return true;
+        });
 
     }
 
@@ -115,11 +139,11 @@ public class MainActivity extends AppCompatActivity {
             huffList.remove(index2);
             huffList.remove(index1);
 
-            for (int i = 0; i < huffList.size(); i++) {
+          /*  for (int i = 0; i < huffList.size(); i++) {
                 Node currentNode = huffList.get(i);
                 //System.out.println("huf list counters:" + currentNode.getCounter());
             }
-
+*/
             boolean isNewInserted = false;
 
             if (huffList.size() > 0){
@@ -172,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         }*?
 
          */
-        printHuffTree(huffList.get(0));
+        //printHuffTree(huffList.get(0));
         nodeArrayList = new ArrayList<>();
         codedLetters = new HashMap<>();
         TreeNode father = new TreeNode(huffList.get(0).getCharacter() != null ? huffList.get(0).getCharacter() +"\n1" : huffList.get(0).getCounter());
@@ -188,14 +212,14 @@ public class MainActivity extends AppCompatActivity {
         {
 
             //System.out.println("leftson::::" + node.getLeftSon().getCounter()+"\n"+node.getLeftSon().getCharacter()+"\n" + code.concat(Integer.toString(0)));
-            String nodeText = node.getLeftSon().getCharacter()!= null ? node.getLeftSon().getCounter()+"\n"+node.getLeftSon().getCharacter()+"\n" + code.concat(Integer.toString(0)) : Integer.toString(node.getLeftSon().getCounter());
+            String nodeText = node.getLeftSon().getCharacter()!= null ? node.getLeftSon().getCounter()+"\n\""+node.getLeftSon().getCharacter()+"\"\n" + code.concat(Integer.toString(0)) : Integer.toString(node.getLeftSon().getCounter());
           // System.out.println("node text"+ nodeText);
             left= new TreeNode(nodeText);
             calcHuffman(node.getLeftSon(),code+0, left);
             fatherNode.addChild(left);
         }
         if(node.getRightSon()!=null)
-        {   String nodeText = node.getRightSon().getCharacter() != null ? node.getRightSon().getCounter()+"\n" + node.getRightSon().getCharacter() +"\n"+code.concat(Integer.toString(1)) : Integer.toString(node.getRightSon().getCounter());
+        {   String nodeText = node.getRightSon().getCharacter() != null ? node.getRightSon().getCounter()+"\n\"" + node.getRightSon().getCharacter() +"\"\n"+code.concat(Integer.toString(1)) : Integer.toString(node.getRightSon().getCounter());
             right = new TreeNode(nodeText);
             calcHuffman(node.getRightSon(), code+1, right);
             fatherNode.addChild(right);
@@ -229,33 +253,89 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onClickGenerate(View view){
         String inputText = mInputText.getText().toString();
+        countOfAllCharacters = 0;
+        countOfDistinctCharacters = 0;
         if (inputText.length()>0){
             huff = new ArrayList<>();
             for(int i =  0; i< inputText.length(); i++){
+                countOfAllCharacters++;
                 boolean charOccured = false;
+                int index = 0;
+                Node newNode = null;
                 for(Node n: huff){
                     charOccured = n.getCharacter().equals(inputText.substring(i,i+1));
                     if(charOccured){
-                        n.setCounter(n.getCounter()+1);
+                         newNode = n;
+                        newNode.setCounter(n.getCounter()+1);
                         break;
                     }
+                    index++;
                 }
                 if(!charOccured){
-                    Node newNode = new Node(1);
+                    countOfDistinctCharacters++;
+                     newNode = new Node(1);
                     newNode.setCharacter(inputText.substring(i,i+1));
+                    //huff.add(newNode);
+                }
+                else {
+                    huff.remove(index);
+                }
+
+                boolean isNewInserted = false;
+
+                if(huff.size() > 0){
+                    Node zeroNode = huff.get(0);
+                    if (newNode.getCounter() < zeroNode.getCounter()) {
+                        huff.add(0, newNode);
+                        isNewInserted = true;
+                    } else {
+                        for (int j = 0; j < huff.size() - 1; j++) {
+                            Node currentNode = huff.get(j);
+                            Node nextNode = huff.get(j + 1);
+                            if (newNode.getCounter() >= currentNode.getCounter() && newNode.getCounter() < nextNode.getCounter()) {
+                                isNewInserted = true;
+                                huff.add(j + 1, newNode);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (!isNewInserted) {
                     huff.add(newNode);
                 }
             }
-
-            for(Node n: huff){
-                System.out.println("Lista: " + n.getCharacter() + "count: "+ n.getCounter());
-            }
+            calculateEntrophy(huff);
             createHuffmanTree(huff);
+            //display counts
+            mAllChars.setText(Integer.toString(countOfAllCharacters));
+            mDiffChars.setText(Integer.toString(countOfDistinctCharacters));
         }
         else {
             mInputText.setText(R.string.empty_string_error);
         }
         System.out.println(inputText);
+    }
+
+    private void calculateEntrophy(List<Node> huff){//check formula
+        double entrophy = 0;
+        for (Node n : huff){
+            double p = n.getCounter()/(double)mInputText.getText().toString().length();
+            entrophy += p * (Math.log(1.0/p) / Math.log(2.0));
+              }
+        DecimalFormat df = new DecimalFormat("#.##");
+        TextView mEntrophyText = findViewById(R.id.enthropyValue);
+        mEntrophyText.setText(df.format(entrophy));
+    }
+    private void calculateAvgWordLength(List<Node> list){//correct
+        double length = 0;
+        for (Node n : list){
+            double p = n.getCounter()/(double)mInputText.getText().toString().length();
+            length += p * n.getCounter()/(double)mInputText.getText().toString().length();
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+        TextView mWordLength = findViewById(R.id.avgLengthValue);
+        mWordLength.setText(df.format(length));
     }
 
     public static List<Node> createExampleList(){

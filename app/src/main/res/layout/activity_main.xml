@@ -56,8 +56,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/topBar"
         android:background="@color/grey"
+        app:layout_constraintTop_toBottomOf="@+id/topBar"
         tools:layout_editor_absoluteX="22dp">
 
 
@@ -155,8 +155,8 @@
                 android:background="@color/secondary"
                 android:enabled="false"
                 android:fontFamily="@font/scp_reg"
-                android:text="@string/calculate"
                 android:onClick="onClickGenerate"
+                android:text="@string/calculate"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -318,7 +318,7 @@
                     android:id="@+id/allCharsCountValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23"
+
                     android:textColor="@color/secondaryDark"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -339,12 +339,13 @@
                     android:id="@+id/diffCharsCountValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="13"
+
+                    android:layout_marginTop="16dp"
                     android:textColor="@color/secondaryDark"
                     android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/allCharsCountValue" />
+
                 <TextView
                     android:id="@+id/avgLengthLabel"
                     android:layout_width="wrap_content"
@@ -356,16 +357,17 @@
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/diffCharsCountLabel" />
+
                 <TextView
                     android:id="@+id/avgLengthValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3.3"
                     android:layout_marginTop="16dp"
                     android:textColor="@color/secondaryDark"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/diffCharsCountValue" />
+
                 <TextView
                     android:id="@+id/enthropyValLabel"
                     android:layout_width="wrap_content"
@@ -378,14 +380,14 @@
                     app:layout_constraintStart_toStartOf="parent"
 
                     app:layout_constraintTop_toBottomOf="@id/avgLengthLabel" />
+
                 <TextView
                     android:id="@+id/enthropyValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2.3"
+                    android:layout_marginTop="16dp"
                     android:textColor="@color/secondaryDark"
                     android:textSize="14sp"
-                    android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/avgLengthValue" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -409,10 +411,10 @@
             <de.blox.treeview.TreeView
                 android:id="@+id/huffTreeView"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="400dp"
+                android:layout_marginBottom="60dp"
                 android:background="@drawable/white60background"
                 android:elevation="2dp"
-                android:layout_marginBottom="32dp"
                 android:textColor="@color/greyDark"
                 android:textSize="14sp" />
         </LinearLayout>
