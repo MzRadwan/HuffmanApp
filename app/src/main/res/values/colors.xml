@@ -19,7 +19,7 @@
     <color name="secondaryLight">#FFff9d3f</color>
     <color name="grey">#FF37474f</color>
     <color name="greyDark">#FF102027</color>
-    <color name="greyDark10">#2A102027</color>
+    <color name="greyDark10">#ffC4C4C4</color>
     <color name="greyLight">#FF62727b</color>
 
 </resources>

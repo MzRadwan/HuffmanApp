@@ -28,7 +28,7 @@ import static com.example.huffmanapp.R.color.greyDark10;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean isDarkMode = true, isInfo = false;
+    private boolean isDarkMode = true;
     private LinearLayout mBackgroundLayout;
     private Button mDarkModeButton, mInfoButton;
     private AppCompatButton mText1Button, mText2Button, mMyTextButton, mGenerateButton;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mBackgroundLayout = findViewById(R.id.backgroundLayout);
         mDarkModeButton = findViewById(R.id.darkModeButton);
-        mInfoButton = findViewById(R.id.aboutButton);
+
         mText1Button = findViewById(R.id.text1Button);
         mText2Button = findViewById(R.id.text2Button);
         mMyTextButton = findViewById(R.id.myTextButton);
@@ -108,15 +108,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickInfo(View view) {
-        if (isInfo) {
-            isInfo = false;
-            mInfoButton.setBackgroundResource(R.drawable.ic_help_white_24dp);
-        } else {
-            isInfo = true;
-            mInfoButton.setBackgroundResource(R.drawable.ic_arrow_back_white_24dp);
-        }
-    }
+
 
     public void onClickGenerate(View view) {
         inputText = mInputText.getText().toString();
@@ -126,8 +118,26 @@ public class MainActivity extends AppCompatActivity {
             huff = new ArrayList<>();
             for (int i = 0; i < inputText.length(); i++) {
                 boolean charOccured = false;
-                int index = 0;
-                Node newNode = null;
+                //Node newNode = null;
+              //  int index = 0;
+                for (Node n : huff) {
+                    charOccured = n.getCharacter().equals(inputText.substring(i, i + 1));
+                    if (charOccured) {
+                        //newNode = n;
+                        n.setCounter(n.getCounter() + 1);
+                        break;
+                    }
+                    //index++;
+
+                }
+                if (!charOccured) {
+                    countOfDistinctCharacters++;
+                    Node newNode = new Node(1);
+                    newNode.setCharacter(inputText.substring(i, i + 1));
+                    huff.add(newNode);
+                }
+
+                /*Node newNode = null;
                 for (Node n : huff) {
                     charOccured = n.getCharacter().equals(inputText.substring(i, i + 1));
                     if (charOccured) {
@@ -163,11 +173,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                if (!isNewInserted) huff.add(newNode);
+                if (!isNewInserted) huff.add(newNode);*/
             }
             calculateEntrophy(huff);
 
-            createHuffmanTree(huff);
+            //createHuffmanTree(huff);
+            treeMaker(huff);
             //display counts
             mAllChars.setText(Integer.toString(countOfAllCharacters));
             mDiffChars.setText(Integer.toString(countOfDistinctCharacters));
@@ -195,12 +206,12 @@ public class MainActivity extends AppCompatActivity {
                     huffList.add(0, newTree);
                     isNewInserted = true;
                 } else {
-                    for (int i = 0; i < huffList.size() - 1; i++) {
-                        Node currentNode = huffList.get(i);
-                        Node nextNode = huffList.get(i + 1);
+                    for (int i = huffList.size() -1; i > 0 ; i--) {
+                        Node currentNode = huffList.get(i-1);
+                        Node nextNode = huffList.get(i);
                         if (newTree.getCounter() >= currentNode.getCounter() && newTree.getCounter() < nextNode.getCounter()) {
                             isNewInserted = true;
-                            huffList.add(i + 1, newTree);
+                            huffList.add(i, newTree);
                             break;
                         }
                     }
@@ -210,13 +221,17 @@ public class MainActivity extends AppCompatActivity {
             if (!isNewInserted) huffList.add(newTree);
         }
 
+        setStats(huffList);
+
+    }
+    private void setStats(List<Node> huffList){
         nodeArrayList = new ArrayList<>();
         codedLetters = new HashMap<>();
         TreeNode father = new TreeNode(huffList.get(0).getCharacter() != null ? huffList.get(0).getCharacter() + "\n1" : huffList.get(0).getCounter());
         huffCodesStr = "";
         countStr = "";
         charactersStr = "";
-        calcHuffman(huff.get(0), "", father);
+        calcHuffman(huffList.get(0), "", father);
 
         adapter.setRootNode(father);
         mCharTable.setText(charactersStr);
@@ -224,7 +239,35 @@ public class MainActivity extends AppCompatActivity {
         mHuffCodeTable.setText(huffCodesStr);
         calculateAvgWordLength(nodeArrayList);
         convertText(codedLetters);
+    }
 
+    private void treeMaker(List<Node> huffList) {
+        Node left, right;
+        while (huffList.size()>1){
+            left = findTheSmallestInList(huffList);
+            right = findTheSmallestInList(huffList);
+            Node newNode = new Node(left.getCounter() + right.getCounter());
+            newNode.setLeftSon(left);
+            newNode.setRightSon(right);
+
+            huffList.add(newNode);
+
+        }
+    setStats(huffList);
+    }
+
+    private Node findTheSmallestInList(List<Node> huffList)
+    {   int index=0;
+        Node smallestNode = huffList.get(0);
+        for (int i = 1; i< huffList.size(); i++) {
+            if(smallestNode.getCounter() > huffList.get(i).getCounter())
+            {
+                smallestNode= huffList.get(i);
+                index=i;
+            }
+        }
+        huffList.remove(index);
+        return smallestNode;
     }
 
     private void calcHuffman(Node node, final String code, TreeNode fatherNode) {

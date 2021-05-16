@@ -29,16 +29,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/aboutButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/ic_help_white_24dp"
-            android:onClick="onClickInfo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/darkModeButton"
@@ -48,7 +38,7 @@
             android:background="@drawable/ic_light_mode_white_24dp"
             android:onClick="onClickDarkMode"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/aboutButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -56,27 +46,22 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
         app:layout_constraintTop_toBottomOf="@+id/topBar"
         tools:layout_editor_absoluteX="22dp">
-
 
         <LinearLayout
             android:id="@+id/backgroundLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-
+            android:background="@color/greyDark"
             android:orientation="vertical"
             android:padding="16dp"
             android:paddingBottom="32dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                >
-
+                android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/text1Button"
@@ -276,7 +261,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/white60background"
-                android:elevation="2dp"
+                android:elevation="4dp"
                 android:padding="16dp"
                 android:textColor="@color/greyDark"
                 android:textSize="14sp" />
