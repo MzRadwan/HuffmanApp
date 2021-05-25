@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("SetTextI18n")
     public void onClickGenerate(View view) {
         inputText = mInputText.getText().toString();
         countOfAllCharacters = inputText.length();
@@ -118,17 +119,12 @@ public class MainActivity extends AppCompatActivity {
             huff = new ArrayList<>();
             for (int i = 0; i < inputText.length(); i++) {
                 boolean charOccured = false;
-                //Node newNode = null;
-              //  int index = 0;
                 for (Node n : huff) {
                     charOccured = n.getCharacter().equals(inputText.substring(i, i + 1));
                     if (charOccured) {
-                        //newNode = n;
                         n.setCounter(n.getCounter() + 1);
                         break;
                     }
-                    //index++;
-
                 }
                 if (!charOccured) {
                     countOfDistinctCharacters++;
@@ -136,48 +132,8 @@ public class MainActivity extends AppCompatActivity {
                     newNode.setCharacter(inputText.substring(i, i + 1));
                     huff.add(newNode);
                 }
-
-                /*Node newNode = null;
-                for (Node n : huff) {
-                    charOccured = n.getCharacter().equals(inputText.substring(i, i + 1));
-                    if (charOccured) {
-                        newNode = n;
-                        newNode.setCounter(n.getCounter() + 1);
-                        break;
-                    }
-                    index++;
-                }
-                if (!charOccured) {
-                    countOfDistinctCharacters++;
-                    newNode = new Node(1);
-                    newNode.setCharacter(inputText.substring(i, i + 1));
-                } else huff.remove(index);
-
-                boolean isNewInserted = false;
-
-                if (huff.size() > 0) {
-                    Node zeroNode = huff.get(0);
-                    if (newNode.getCounter() < zeroNode.getCounter()) {
-                        huff.add(0, newNode);
-                        isNewInserted = true;
-                    } else {
-                        for (int j = 0; j < huff.size() - 1; j++) {
-                            Node currentNode = huff.get(j);
-                            Node nextNode = huff.get(j + 1);
-                            if (newNode.getCounter() >= currentNode.getCounter() && newNode.getCounter() < nextNode.getCounter()) {
-                                isNewInserted = true;
-                                huff.add(j + 1, newNode);
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (!isNewInserted) huff.add(newNode);*/
             }
             calculateEntrophy(huff);
-
-            //createHuffmanTree(huff);
             treeMaker(huff);
             //display counts
             mAllChars.setText(Integer.toString(countOfAllCharacters));
@@ -288,7 +244,9 @@ public class MainActivity extends AppCompatActivity {
             codedLetters.put(node.getCharacter(), code.length() > 0 ? code : "1");
             nodeArrayList.add(node);
             if (charactersStr.length() != 0) charactersStr += "\n\n";
-            charactersStr += node.getCharacter();
+            if (node.getCharacter().equals("\n"))
+                charactersStr += "\\n";
+            else charactersStr += node.getCharacter();
             if (huffCodesStr.length() != 0) huffCodesStr += "\n\n";
             huffCodesStr += node.getHuffmanCode();
             if (countStr.length() != 0) countStr += "\n\n";

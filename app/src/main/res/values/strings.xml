@@ -9,14 +9,14 @@
     <string name="stats">Statystyki</string>
     <string name="generated_tree">Wygenerowane drzewo Huffmana</string>
     <string name="text2_hint">Dominika Radwan teleinformatyka</string>
-    <string name="text1_hint">She sells seashells by the seashore,\nThe shells she sells are seashells, I\'m sure.\nSo if she sells Seashells on the seashore,\nThen I\'m sure she sells seashore shells.</string>
+    <string name="text1_hint">She sells seashells by the seashore,\nThe shells she sells are seashells, I\'m sure.\nSo if she sells seashells on the seashore,\nThen I\'m sure she sells seashore shells.</string>
     <string name="character">Symbol</string>
     <string name="count_label">Liczba wystąpień</string>
     <string name="huffman_code">Kod Huffmana</string>
     <string name="count_of_all_chars">Liczba wszystkich znaków</string>
     <string name="count_of_unique_chars">Liczba różnych znaków</string>
     <string name="entropy_value">Wartośc entropii</string>
-    <string name="avg_lenth_of_word">Średnia długość słowa kodowanego</string>
+    <string name="avg_lenth_of_word">Średnia długość słowa kodowego</string>
     <string name="input_info">Wybierz jedną z opcji powyżej</string>
     <string name="empty_string_error">Podany tekst nie może być pusty.</string>
 
